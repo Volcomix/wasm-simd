@@ -1,0 +1,13 @@
+{
+  "name": "wasm-simd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Volcomix",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "wasm": "wat2wasm simd.wat -o simd.wasm --enable-simd",
+    "start": "yarn wasm && node --experimental-wasm-simd index.js"
+  }
+}
