@@ -1,8 +1,10 @@
 {
   "name": "wasm-simd",
+  "description": "Demonstrates SIMD usage in JavaScript through WebAssembly",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Volcomix",
+  "repository": "https://github.com/Volcomix/wasm-simd.git",
   "license": "MIT",
   "private": true,
   "type": "module",
