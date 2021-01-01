@@ -1,23 +1,21 @@
 (module
   (import "js" "memory" (memory 1))
-  ;; For now, only adds 3 on each value of "a"
-  (func (export "add") (param $arraySize i32) (result i32)
+  (func (export "add") (param $arraySize i32)
     (local $result i32)
     (local $i i32)
-    (v128.store
-      (local.tee $result (i32.mul (local.get $arraySize) (i32.const 2)))
-      (v128.load (i32.const 0))
-    )
+    (local.set $result (i32.shl (local.get $arraySize) (i32.const 1))) ;; arraySize * 2
     (loop
       (v128.store
-        (local.get $result)
-        (i8x16.add (v128.load (local.get $result)) (i8x16.splat (i32.const 1)))
+        (i32.add (local.get $result) (local.get $i))
+        (i8x16.add
+          (v128.load (local.get $i)) ;; a
+          (v128.load (i32.add (local.get $arraySize) (local.get $i))) ;; b
+        )
       )
-      (br_if 0 (i32.ne
-        (local.tee $i (i32.add (local.get $i) (i32.const 1)))
-        (i32.const 3)
+      (br_if 0 (i32.lt_u
+        (local.tee $i (i32.add (local.get $i) (i32.const 16)))
+        (local.get $arraySize)
       ))
     )
-    local.get $i
   )
 )
