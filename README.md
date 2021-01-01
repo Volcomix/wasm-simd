@@ -12,7 +12,6 @@ for (let j = 0; j < arraySize; j++) {
 ```
 
 The second implementation relies on WebAssembly code written by hand in [text format](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format).
-
 Here is the SIMD specific part (you can find the entire code in [simd.wat](simd.wat)):
 
 ```wasm
