@@ -19,34 +19,44 @@ async function main() {
   const result = new Uint8Array(memory.buffer, 2 * arraySize, arraySize)
 
   console.log()
+
+  fillRandom(a, b)
+  addJS(a, b, result)
+  result.fill(0)
+  addSIMD(instance, result)
+
+  console.log()
+}
+
+function fillRandom(a, b) {
   for (let i = 0; i < arraySize; i++) {
     a[i] = Math.floor(Math.random() * maxValue)
     b[i] = Math.floor(Math.random() * maxValue)
   }
   console.log('a:', a.subarray(debugStart, debugEnd))
   console.log('b:', b.subarray(debugStart, debugEnd))
+}
 
+function addJS(a, b, result) {
   console.log('\n--- Simple loop (JS) ---')
-  let start = Date.now()
+  const start = Date.now()
   for (let i = 0; i < runCount; i++) {
     for (let j = 0; j < arraySize; j++) {
       result[j] = a[j] + b[j]
     }
   }
-  let elapsed = Date.now() - start
+  const elapsed = Date.now() - start
   console.log(`${elapsed}ms - result:`, result.subarray(debugStart, debugEnd))
+}
 
-  result.fill(0)
-
+function addSIMD(instance, result) {
   console.log('\n--- SIMD (WASM) ---')
-  start = Date.now()
+  const start = Date.now()
   for (let i = 0; i < runCount; i++) {
     instance.exports.add(arraySize)
   }
-  elapsed = Date.now() - start
+  const elapsed = Date.now() - start
   console.log(`${elapsed}ms - result:`, result.subarray(debugStart, debugEnd))
-
-  console.log()
 }
 
 main()

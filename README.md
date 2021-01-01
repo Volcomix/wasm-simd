@@ -29,14 +29,14 @@ Here is the SIMD specific part (you can find the entire code in [simd.wat](simd.
 Here are the execution times I get on my computer, along with few values from the arrays for debugging purpose:
 
 ```
-a: Uint8Array(4) [ 99, 127, 7, 13 ]
-b: Uint8Array(4) [ 6, 77, 8, 85 ]
+a: Uint8Array(4) [ 103, 64, 32, 55 ]
+b: Uint8Array(4) [ 48, 27, 121, 108 ]
 
 --- Simple loop (JS) ---
-3742ms - result: Uint8Array(4) [ 105, 204, 15, 98 ]
+1587ms - result: Uint8Array(4) [ 151, 91, 153, 163 ]
 
 --- SIMD (WASM) ---
-74ms - result: Uint8Array(4) [ 105, 204, 15, 98 ]
+73ms - result: Uint8Array(4) [ 151, 91, 153, 163 ]
 ```
 
 ## Requirements
