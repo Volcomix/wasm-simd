@@ -1,6 +1,9 @@
 import fs from 'fs'
 
 const arraySize = 10000
+const maxValue = 128
+const debugStart = 14
+const debugEnd = 18
 
 async function main() {
   const memory = new WebAssembly.Memory({ initial: 1 })
@@ -10,16 +13,16 @@ async function main() {
   const result = new Uint8Array(memory.buffer, 2 * arraySize, arraySize)
 
   for (let i = 0; i < arraySize; i++) {
-    a[i] = Math.floor(Math.random() * 128)
-    b[i] = Math.floor(Math.random() * 128)
+    a[i] = Math.floor(Math.random() * maxValue)
+    b[i] = Math.floor(Math.random() * maxValue)
   }
-  console.log('a:', a.subarray(0, 4))
-  console.log('b:', b.subarray(0, 4))
+  console.log('a:', a.subarray(debugStart, debugEnd))
+  console.log('b:', b.subarray(debugStart, debugEnd))
 
   for (let i = 0; i < arraySize; i++) {
     result[i] = a[i] + b[i]
   }
-  console.log('result:', result.subarray(0, 4))
+  console.log('result:', result.subarray(debugStart, debugEnd))
 
   result.fill(0)
 
@@ -29,8 +32,8 @@ async function main() {
       js: { memory },
     },
   )
-  instance.exports.add(arraySize)
-  console.log('result:', result.subarray(0, 4))
+  console.log(instance.exports.add(arraySize))
+  console.log('result:', result.subarray(debugStart, debugEnd))
 }
 
 main()
